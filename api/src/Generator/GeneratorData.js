@@ -17,13 +17,13 @@ const {ukrainianFullNames,
 	ukrainianStreets
 } = require('./repo/UkrainRepo');
 
-function generateUserData(region) {
+ function generateUserData(region) {
 	switch (region) {
 		case 'ES':
 			faker.locale = 'es';
 			return {
 				// number: faker.number.int({ min: 1, max: 1000 }),
-				identifier: faker.string.uuid(),
+				id: faker.string.uuid(),
 				fullName: faker.helpers.arrayElement(spanishFullNames),
 				address: generateAddress('ES'),
 				phone: generatePhoneNumber('ES'),
@@ -32,7 +32,7 @@ function generateUserData(region) {
 			faker.locale = 'uk';
 			return {
 				// number: faker.number.int({ min: 1, max: 1000 }),
-				identifier: faker.string.uuid(),
+				id: faker.string.uuid(),
 				fullName: faker.helpers.arrayElement(ukrainianFullNames),
 				address: generateAddress('UK'),
 				phone: generatePhoneNumber('UK'),
@@ -41,7 +41,7 @@ function generateUserData(region) {
 			faker.locale = 'en_US';
 			return {
 				// number: faker.number.int({ min: 1, max: 1000 }),
-				identifier: faker.string.uuid(),
+				id: faker.string.uuid(),
 				fullName: faker.person.fullName(),
 				address: generateAddress('US'),
 				phone: generatePhoneNumber('US'),
@@ -100,12 +100,17 @@ function generatePhoneNumber(region) {
 	}
 }
 
+module.exports = {
+	generateUserData
+};
+// export default generateUserData;
+
 
 // Пример использования для разных стран
-const userES = generateUserData('ES');
-const userUK = generateUserData('UK');
-const userUS = generateUserData('US');
-
-console.log('Spain:', userES);
-console.log('Украiна:', userUK);
-console.log('USA:', userUS);
+// const userES = generateUserData('ES');
+// const userUK = generateUserData('UK');
+// const userUS = generateUserData('US');
+//
+// console.log('Spain:', userES);
+// console.log('Украiна:', userUK);
+// console.log('USA:', userUS);
