@@ -2,7 +2,7 @@ const express = require('express');
 const faker = require('@faker-js/faker');
 const path = require('path');
 
-const {generateUserData} = require('./src/Generator/GeneratorData');
+const {generateUserData} = require('./src/GeneratorData/GeneratorData');
 
 const app = express();
 const port = 3001;
