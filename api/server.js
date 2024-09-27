@@ -2,7 +2,7 @@ const express = require('express');
 const faker = require('@faker-js/faker');
 const path = require('path');
 
-const {generateUserData} = require('./src/GeneratorData/GeneratorData');
+const {generateUserData} = require('./src/GeneratorData/mainGenerator');
 
 const app = express();
 const port = 3001;
@@ -15,12 +15,14 @@ app.use(express.static(path.join(__dirname, 'build')));
 
 api.get('/generate', (req, res) => {
 	// return res.status(200).json({message: 'Generate'});
-	const { region } = req.query;
+	const { region, errors } = req.query;
 	const count = 20;
+
+
 
 	const users = [];
 	for (let i = 0; i < count; i++) {
-		users.push(generateUserData(region));
+		users.push(generateUserData(region, errors));
 	}
 	 res.json(users);
 });
