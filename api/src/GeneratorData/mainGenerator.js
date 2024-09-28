@@ -1,37 +1,35 @@
-const { faker } = require('@faker-js/faker');
+
 const {config} = require("./config");
-
 const { applyErrorsToString } = require("../GeneratorErrors/applyErrorsToString");
+const {faker} = require('@faker-js/faker');
 
-function generateUserData(region, errorCount) {
+function generateUserData(region, errors, seed ) {
 
 	const regionConfig = config[region];
 
 	if (!regionConfig) return null;
 
+	faker.seed(parseInt(seed));
+
 	faker.locale = regionConfig.locale;
 
-	const errors = Math.round(errorCount/4 * 10)/10;
+	const errorsCount = Math.round(errors/4 * 10)/10;
 
-	const record =  {
-		// id:  faker.string.uuid(),
-		id: faker.string.uuid(),
-		fullName: regionConfig.fullNameArray
-			? faker.helpers.arrayElement(regionConfig.fullNameArray)
-			: faker.person.fullName(),
-		address: regionConfig.generateAddress(),
-		phone: regionConfig.generatePhoneNumber(),
+	const recordsNumber = 20;
+
+	const records = []
+
+	for (let i = 0; i < recordsNumber; i++) {
+		records.push({
+			id: applyErrorsToString(faker.string.uuid(), errorsCount, region, faker),
+			fullName: regionConfig.fullNameArray
+					? applyErrorsToString(faker.helpers.arrayElement(regionConfig.fullNameArray), errorsCount, region, faker)
+					: applyErrorsToString(faker.person.fullName(), errorsCount, region, faker),
+			address: applyErrorsToString(regionConfig.generateAddress(), errorsCount, region, faker),
+			phone: applyErrorsToString(regionConfig.generatePhoneNumber(), errorsCount, region, faker),
+		})
 	}
-
-
-	const updatedRecord = {};
-
-	Object.entries(record).forEach(([key, value]) => {
-		updatedRecord[key] = applyErrorsToString(value, errors, region);
-	})
-
-	return updatedRecord;
-
+	return records;
 }
 
 module.exports = {

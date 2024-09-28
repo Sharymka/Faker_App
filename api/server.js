@@ -1,5 +1,4 @@
 const express = require('express');
-const faker = require('@faker-js/faker');
 const path = require('path');
 
 const {generateUserData} = require('./src/GeneratorData/mainGenerator');
@@ -14,17 +13,8 @@ api.use(express.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
 api.get('/generate', (req, res) => {
-	// return res.status(200).json({message: 'Generate'});
-	const { region, errors } = req.query;
-	const count = 20;
-
-
-
-	const users = [];
-	for (let i = 0; i < count; i++) {
-		users.push(generateUserData(region, errors));
-	}
-	 res.json(users);
+	const { region, errors, seed } = req.query;
+	 res.json(generateUserData(region, errors, seed));
 });
 
 app.get('/*', function (req, res) {
