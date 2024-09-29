@@ -1,13 +1,13 @@
 
-const { applyErrorsToString } = require("../GeneratorErrors/applyErrorsToString");
-const  FakerClass  = require('../GeneratorErrors/FakerClass');
+const  FakerClass  = require('./FakerClass');
 
 function generateUserData(region, errors, seed ) {
 
-	const fakerIns = new FakerClass(region);
-	fakerIns.setSeed(parseInt(seed));
 
 	const errorsCount = Math.round(errors/4 * 10)/10;
+	const fakerIns = new FakerClass(region, errorsCount);
+	fakerIns.setSeed(parseInt(seed));
+
 	const recordsNumber = 20;
 	const records = []
 
@@ -20,3 +20,4 @@ function generateUserData(region, errors, seed ) {
 module.exports = {
 	generateUserData
 };
+

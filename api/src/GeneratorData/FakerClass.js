@@ -1,12 +1,15 @@
 const { fakerES, faker} = require('@faker-js/faker');
 const { fakerUK } = require('@faker-js/faker');
 const { fakerEN_US } = require('@faker-js/faker');
+const ErrorClass = require("../GeneratorErrors/ErrorClass");
 
 class FakerClass {
 
-	 constructor(region) {
+	 constructor(region, errors) {
+		this.errors = errors;
 		this.region = region;
 		this.faker = this._get();
+		this.errors = new ErrorClass(this.faker, region, errors);
 	}
 
 	_get() {
@@ -44,10 +47,10 @@ class FakerClass {
 
 	generateUserData() {
 		return {
-			id: this.faker.string.uuid(),
-			fullName: this.faker.person.fullName(),
-			address: this._generateAddress(),
-			phoneNumber: this._generatePhoneNumber(),
+			id: this.errors.applyError(this.faker.string.uuid()),
+			fullName: this.errors.applyError(this.faker.person.fullName()),
+			address: this.errors.applyError(this._generateAddress()),
+			phone: this.errors.applyError(this._generatePhoneNumber()),
 		};
 	}
 }

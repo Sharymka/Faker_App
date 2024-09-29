@@ -16,9 +16,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 api.get('/generate', (req, res) => {
 	const { region, errors, seed, page } = req.query;
 	const combinedSeed = parseInt(`${seed}${page}`);
-	// console.log(combinedSeed);
-	console.log(generateUserData(region, errors, combinedSeed));
-	 res.json(generateUserData(region, errors, combinedSeed));
+	res.json(generateUserData(region, errors, combinedSeed));
 });
 
 app.get('/*', function (req, res) {
