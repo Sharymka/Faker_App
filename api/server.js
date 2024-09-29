@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 
+
 const {generateUserData} = require('./src/GeneratorData/mainGenerator');
 
 const app = express();
@@ -13,8 +14,11 @@ api.use(express.json());
 app.use(express.static(path.join(__dirname, 'build')));
 
 api.get('/generate', (req, res) => {
-	const { region, errors, seed } = req.query;
-	 res.json(generateUserData(region, errors, seed));
+	const { region, errors, seed, page } = req.query;
+	const combinedSeed = parseInt(`${seed}${page}`);
+	// console.log(combinedSeed);
+	console.log(generateUserData(region, errors, combinedSeed));
+	 res.json(generateUserData(region, errors, combinedSeed));
 });
 
 app.get('/*', function (req, res) {

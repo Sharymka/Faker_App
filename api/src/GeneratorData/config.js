@@ -3,6 +3,7 @@ const {ukrainianFullNames} = require("./repo/UkrainRepo");
 const {generatePhoneNumber} = require("./generatePhoneNumber");
 const {generateAddress} = require("./generateAddress");
 
+
 const config = {
 	'ES': {
 		locale: 'es',

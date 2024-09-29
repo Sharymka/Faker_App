@@ -1,4 +1,49 @@
-  const spanishCities = [
+
+// const axios = require('axios');
+//
+// async function fetchSpanishUsers(index) {
+// 	let names = [];
+//
+//
+// 	// Запрашиваем 100,000 пользователей параллельно
+// 	const promises = Array.from({ length: 10 }, async () => {
+// 		try {
+// 			const response = await axios.get('https://randomuser.me/api/?nat=es');
+// 			const user = response.data.results[0];
+// 			return 1;
+// 		} catch (e) {
+// 			console.log(e.message);
+// 			return 1;
+// 		}
+// 		// return `${user.name.first} ${user.name.last}`;
+// 	});
+//
+// 	// Ожидаем выполнения всех запросов
+// 	names = await Promise.all(promises);
+//
+// 	return names;
+// }
+//
+// fetchSpanishUsers()
+// 	.then(names => {
+// 		console.log(names.length);  // Выведет 100000
+// 		console.log(names.slice(0, 10));  // Покажет первые 10 имен для примера
+// 	})
+// 	.catch(error => {
+// 		console.error('Error fetching users:', error);
+// 	});
+
+
+const {fakerES} = require('@faker-js/faker');
+let name = [];
+
+for (let i = 0 ; i < 100; i++) {
+	name.push(`${fakerES.person.fullName()}`);
+}
+
+console.log(name);
+
+const spanishCities = [
 	'Madrid', 'Barcelona', 'Valencia', 'Sevilla', 'Zaragoza',
 	'Málaga', 'Murcia', 'Palma', 'Las Palmas de Gran Canaria', 'Bilbao'
 ];
