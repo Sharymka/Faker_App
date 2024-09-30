@@ -1,21 +1,26 @@
+const seedrandom = require('seedrandom');
 
 class ErrorClass {
 
-	 constructor(fakerIns, region, errors) {
+	 constructor(region, errors, seed) {
+		 this.seed = seed;
 		 this.errors = errors;
 		 this.region = region;
-		 this.faker = fakerIns;
+		 this.rng = this._setRandomSeed(seed);
+	}
+	_setRandomSeed() {
+		return seedrandom(this.seed);
 	}
 
-	 applyError(str) {
+	applyError(str) {
 		this.modifiedStr = str;
 
 		const errorsAmount = Math.floor(this.errors);
 		const additionalError = this.errors - errorsAmount;
 
 		for (let i = 0; i < errorsAmount; i++) {
+			this._setRandomSeed(`${this.seed}${i}`);
 			this.modifiedStr = this.chooseError(this.modifiedStr);
-			// console.log(`${i} - ` + this.modifiedStr);
 		}
 
 		if (Math.random() <= additionalError) {
@@ -26,7 +31,9 @@ class ErrorClass {
 	}
 
 	chooseError() {
-		switch (this.faker.helpers.arrayElement( ['delete', 'insert', 'swap'])) {
+
+		const errorsType = ['delete', 'insert', 'swap'];
+		switch (errorsType[Math.floor(this.rng () * errorsType.length)]) {
 			case 'delete':
 				return this.deleteRandomChar();
 			case 'insert':
@@ -37,25 +44,28 @@ class ErrorClass {
 				return this.modifiedStr;
 		}
 	}
+
 	deleteRandomChar() {
 		if (this.modifiedStr.length <= 1) {
 			// console.log(`delete: длина равна 1 удалять нельзя !!!!! ` + this.modifiedStr);
 			return this.chooseError();
 		} else {
 			// console.log(`delete: длина дольше 1 можно еще удалять ` + this.modifiedStr);
-			const index = this.faker.number.int({ min: 0, max: this.modifiedStr.length - 1 });
+			const index = Math.floor(this.rng() * this.modifiedStr.length);
+			// const index = this.fakerIns.number.int({ min: 0, max: this.modifiedStr.length - 1 });
 			return this.modifiedStr.slice(0, index) + this.modifiedStr.slice(index + 1);
 		}
 
 	}
 
 	addRandomChar() {
-		if (this.modifiedStr.length >= 50) {
+		if (this.modifiedStr.length >= 70) {
 			// console.log(`add: длина уже слишком большая, добавлять нельзя!!!!! ` + this.modifiedStr);
 			return this.chooseError();
 		} else {
-			// console.log(`add: длина меньше 50 добавить можно ` + this.modifiedStr);
-			const index = this.faker.number.int({ min: 0, max: this.modifiedStr.length - 1 });
+			// console.log(`add: длина меньше 70 добавить можно ` + this.modifiedStr);
+			const index = Math.floor(this.rng() * this.modifiedStr.length);
+			// const index = this.fakerIns.number.int({ min: 0, max: this.modifiedStr.length - 1 });
 			const randomChar = this.getRandomChar();
 			return this.modifiedStr.slice(0, index) + randomChar + this.modifiedStr.slice(index);
 		}
@@ -67,7 +77,8 @@ class ErrorClass {
 			return this.chooseError();
 		} else {
 			// console.log(`swap: длина больше 2 можно менять ` + this.modifiedStr);
-			const index = this.faker.number.int({ min: 0, max: this.modifiedStr.length - 2 });
+			const index = Math.floor(this.rng() * (this.modifiedStr.length - 1));
+			// const index = this.fakerIns.number.int({ min: 0, max: this.modifiedStr.length - 2 });
 			return (
 				this.modifiedStr.slice(0, index) + this.modifiedStr[index + 1] + this.modifiedStr[index] + this.modifiedStr.slice(index + 2)
 			);
@@ -80,8 +91,7 @@ class ErrorClass {
 			UK: 'абвгґдеєжзийіїклмнопрстуфхцчшщьюяАБВГҐДЕЄЖЗИЙІЇКЛМНОПРСТУФХЦЧШЩЬЮЯ0123456789_-&%*@'
 		};
 		const alphabet = alphabets[this.region] || alphabets['EN'];
-		return alphabet.charAt(this.faker.number.int({ min: 0, max: alphabet.length - 1 }));
+		return alphabet.charAt(Math.floor(this.rng() * this.modifiedStr.length));
 	}
 }
 module.exports = ErrorClass;
-

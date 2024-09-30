@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 
 
-const {generateUserData} = require('./src/GeneratorData/mainGenerator');
+const {generateRecords} = require('./src/mainGenerator');
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -16,7 +16,7 @@ app.use(express.static(path.join(__dirname, 'build')));
 api.get('/generate', (req, res) => {
 	const { region, errors, seed, page } = req.query;
 	const combinedSeed = parseInt(`${seed}${page}`);
-	res.json(generateUserData(region, errors, combinedSeed));
+	res.json(generateRecords(region, errors, combinedSeed));
 });
 
 app.get('/*', function (req, res) {
