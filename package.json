@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "build": "cd web && npm run build && cp -r build ../api",
-    "start": "cd api && node server.js",
-    "prestart:dev": "npm run build",
-    "start:dev": "cd api && nodemon server.js"
+    "build": "cd web && npm install && npm run build && cp -r build ../api",
+    "start": "cd api &&  node server.js",
+    "prestart:dev": "npm install && npm run build",
+    "start:dev": " cd api && nodemon server.js"
   },
   "author": "",
   "license": "ISC",
