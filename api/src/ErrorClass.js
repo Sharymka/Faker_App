@@ -47,12 +47,9 @@ class ErrorClass {
 
 	deleteRandomChar() {
 		if (this.modifiedStr.length <= 1) {
-			// console.log(`delete: длина равна 1 удалять нельзя !!!!! ` + this.modifiedStr);
 			return this.chooseError();
 		} else {
-			// console.log(`delete: длина дольше 1 можно еще удалять ` + this.modifiedStr);
 			const index = Math.floor(this.rng() * this.modifiedStr.length);
-			// const index = this.fakerIns.number.int({ min: 0, max: this.modifiedStr.length - 1 });
 			return this.modifiedStr.slice(0, index) + this.modifiedStr.slice(index + 1);
 		}
 
@@ -60,12 +57,9 @@ class ErrorClass {
 
 	addRandomChar() {
 		if (this.modifiedStr.length >= 70) {
-			// console.log(`add: длина уже слишком большая, добавлять нельзя!!!!! ` + this.modifiedStr);
 			return this.chooseError();
 		} else {
-			// console.log(`add: длина меньше 70 добавить можно ` + this.modifiedStr);
 			const index = Math.floor(this.rng() * this.modifiedStr.length);
-			// const index = this.fakerIns.number.int({ min: 0, max: this.modifiedStr.length - 1 });
 			const randomChar = this.getRandomChar();
 			return this.modifiedStr.slice(0, index) + randomChar + this.modifiedStr.slice(index);
 		}
@@ -73,12 +67,9 @@ class ErrorClass {
 
 	 swapAdjacentChars() {
 		if(this.modifiedStr.length < 2) {
-			// console.log(`swap: длина меньше 2 менять нельзя!!!!  ` + this.modifiedStr);
 			return this.chooseError();
 		} else {
-			// console.log(`swap: длина больше 2 можно менять ` + this.modifiedStr);
 			const index = Math.floor(this.rng() * (this.modifiedStr.length - 1));
-			// const index = this.fakerIns.number.int({ min: 0, max: this.modifiedStr.length - 2 });
 			return (
 				this.modifiedStr.slice(0, index) + this.modifiedStr[index + 1] + this.modifiedStr[index] + this.modifiedStr.slice(index + 2)
 			);
