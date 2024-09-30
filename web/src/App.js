@@ -13,11 +13,11 @@ function App() {
   return (
       <FakerProvider>
           <Card className=" mt-5 p-4 container">
-              <div className="row gap-5 justify-content-center">
+              <div className="row gap-5 justify-content-around">
                   <SelectorComponent/>
                   <ErrorComponent/>
                   <SeedComponent/>
-                  <ButtonComponent/>
+                  {/*<ButtonComponent/>*/}
               </div>
               <TableComponent/>
               <PaginationComponent/>
